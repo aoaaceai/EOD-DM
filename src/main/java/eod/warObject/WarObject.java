@@ -24,12 +24,14 @@ public abstract class WarObject implements GameObject, EventReceiver, EventSende
     ArrayList<Status> status;
     protected ArrayList<Class<? extends Event>> canHandle;
     protected ArrayList<EventReceiver> receivers;
+    private ArrayList<StatusHolder> statusHolders;
 
     public WarObject(Player player, Party party) {
         this.player = player;
         this.party = party;
         canHandle = new ArrayList<>();
         receivers = new ArrayList<>();
+        statusHolders = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -94,12 +96,17 @@ public abstract class WarObject implements GameObject, EventReceiver, EventSende
         receivers.remove(receiver);
     }
 
+    public void assignStatusHolder(StatusHolder holder) {
+        statusHolders.add(holder);
+    }
+
+    public void removeStatusHolder(StatusHolder holder) {
+        statusHolders.remove(holder);
+    }
+
     @Override
     public StatusHolder[] getStatusHolders() {
-        return receivers.stream()
-                .filter(receiver -> receiver instanceof StatusHolder)
-                .map(receiver -> (StatusHolder) receiver)
-                .toArray(StatusHolder[]::new);
+        return statusHolders.toArray(new StatusHolder[0]);
     }
 
     @Override
