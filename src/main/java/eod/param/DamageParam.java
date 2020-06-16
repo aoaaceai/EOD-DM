@@ -7,4 +7,12 @@ public class DamageParam {
     public DamageParam(int damage) {
         this.damage = damage;
     }
+
+    public void reduceDamage(int amount) {
+        if(realDamage) return;
+        damage -= amount;
+        if(damage < 0) {
+            damage = 0;
+        }
+    }
 }

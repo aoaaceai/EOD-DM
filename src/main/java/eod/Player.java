@@ -440,6 +440,33 @@ public class Player implements Snapshotted<Player.Snapshot>,
         return getBoard().getLine(p, dx, 0, param);
     }
 
+    public ArrayList<Point> getFrontEdge(Point p) {
+        int dx;
+        if(isPlayerA()) {
+            dx = 1;
+        } else {
+            dx = -1;
+        }
+        return getBoard().getEdge(p, dx, 0);
+    }
+
+    public ArrayList<Point> getBackEdge(Point p) {
+        int dx;
+        if(isPlayerA()) {
+            dx = -1;
+        } else {
+            dx = 1;
+        }
+        return(getBoard().getEdge(p, dx, 0));
+    }
+
+    public ArrayList<Point> getLREdge(Point p) {
+        return new ArrayList<Point>(){{
+           addAll(getBoard().getEdge(p, 0, 1));
+           addAll(getBoard().getEdge(p, 0, -1));
+        }};
+    }
+
     public BoardPosition getPosition(Point p) {
         return getBoard().getPosition(this, p);
     }

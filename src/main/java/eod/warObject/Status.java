@@ -9,5 +9,6 @@ public enum Status {
     CANT_ATTACK,
     NO_EFFECT,
     POISON,
-    NO_ATTACK
+    NO_ATTACK,
+    NO_ATTACK_INITIATION
 }

@@ -256,6 +256,25 @@ public class Gameboard implements Snapshotted<Gameboard.Snapshot>, GameObject {
         return points;
     }
 
+    public ArrayList<Point> getEdge(Point p, int dx, int dy) {
+        int x = p.x + dx, y = p.y + dy;
+        if(!inBounds(x, y) || hasObjectOn(x, y)) {
+            return(new ArrayList<>());
+        }
+
+        while(!hasObjectOn(x, y)) {
+            x += dx;
+            y += dy;
+            if(!inBounds(x, y)) {
+                return new ArrayList<>();
+            }
+        }
+
+        ArrayList<Point> r = new ArrayList<>();
+        r.add(new Point(x, y));
+        return r;
+    }
+
     public void summonObject(WarObject object, Point point) throws IllegalArgumentException {
         int x = point.x, y = point.y;
         if(hasObjectOn(x, y)) {
