@@ -33,7 +33,7 @@ public class Game implements Snapshotted<Game.Snapshot>, GameObject, EffectExecu
     private EventManager eventManager = new EventManager();
     private Round currentRound;
     private LinkedHashMap<Round, Snapshot> history = new LinkedHashMap<>();
-    private int maxHistoryLength = 7;
+    private static final int maxHistoryLength = 7;
 
     public Game(Player A, Player B) {
         this.A = A;

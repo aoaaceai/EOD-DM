@@ -44,6 +44,7 @@ public class Player implements Snapshotted<Player.Snapshot>,
     private String name;
     private boolean isPlayerA;
     private boolean isActingPlayer = false;
+    private int maxRoundNumber;
     private HashMap<Class<? extends Event>, ArrayList<EventReceiver>> receivers;
 
     public Player(Deck deck, String name) {
@@ -220,6 +221,10 @@ public class Player implements Snapshotted<Player.Snapshot>,
 
     public Gameboard getBoard() {
         return game.getBoard();
+    }
+
+    public boolean isStable() {
+        return (maxRoundNumber >= 7);
     }
 
     public boolean isLeaderAlive() {
@@ -501,7 +506,9 @@ public class Player implements Snapshotted<Player.Snapshot>,
     @Override
     public void onEventOccurred(GameObject sender, Event event) {
         if(event instanceof RoundStartEvent) {
-            output.sendRoundStarted(((RoundStartEvent) event).getStartedRound());
+            Round startedRound = ((RoundStartEvent) event).getStartedRound();
+            maxRoundNumber = startedRound.getNumber();
+            output.sendRoundStarted(startedRound);
         } else if(event instanceof RoundEndEvent) {
             output.sendRoundEnded(((RoundEndEvent) event).getEndedRound());
         } else if(event instanceof DirectAttackEvent) {
